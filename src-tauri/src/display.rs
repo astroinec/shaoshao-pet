@@ -67,12 +67,14 @@ pub fn get_all(window: &WebviewWindow) -> Vec<Display> {
 // ─── Windows 实现：Win32 API ──────────────────────────────────────
 
 #[cfg(target_os = "windows")]
-fn enumerate(_window: &WebviewWindow) -> Vec<Display> {
-    use windows::Win32::Foundation::RECT;
-    use windows::Win32::Graphics::Gdi::{
-        EnumDisplayMonitors, GetMonitorInfoW, HDC, HMONITOR, MONITORINFO, MONITORINFOEXW,
-    };
+use windows::Win32::Foundation::{LPARAM, RECT};
+#[cfg(target_os = "windows")]
+use windows::Win32::Graphics::Gdi::{
+    EnumDisplayMonitors, GetMonitorInfoW, HDC, HMONITOR, MONITORINFO, MONITORINFOEXW,
+};
 
+#[cfg(target_os = "windows")]
+fn enumerate(_window: &WebviewWindow) -> Vec<Display> {
     let mut displays = Vec::new();
 
     unsafe {
@@ -80,7 +82,7 @@ fn enumerate(_window: &WebviewWindow) -> Vec<Display> {
             HDC::default(),
             None,
             Some(monitor_enum_proc),
-            windows::Win32::Foundation::LPARAM(&mut displays as *mut Vec<Display> as isize),
+            LPARAM(&mut displays as *mut Vec<Display> as isize),
         );
     }
 
@@ -106,10 +108,8 @@ unsafe extern "system" fn monitor_enum_proc(
     hmonitor: HMONITOR,
     _hdc: HDC,
     _rect: *mut RECT,
-    lparam: windows::Win32::Foundation::LPARAM,
+    lparam: LPARAM,
 ) -> windows::Win32::Foundation::BOOL {
-    use windows::Win32::Graphics::Gdi::{GetMonitorInfoW, MONITORINFO, MONITORINFOEXW};
-
     let displays = &mut *(lparam.0 as *mut Vec<Display>);
 
     let mut info = MONITORINFOEXW::default();
