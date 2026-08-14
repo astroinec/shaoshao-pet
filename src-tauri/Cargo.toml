@@ -1,0 +1,26 @@
+[package]
+name = "shaoshao-pet"
+version = "1.0.0"
+edition = "2021"
+description = "少少桌宠 — 基于 Tauri v2 的像素桌面宠物，支持多精灵切换、多屏跨屏漫游、AI 追逐/逃离"
+authors = ["javanchen"]
+license = "MIT"
+repository = "https://github.com/astroinec/shaoshao-pet"
+homepage = "https://github.com/astroinec/shaoshao-pet"
+
+[lib]
+name = "desktop_pet_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["macos-private-api", "tray-icon"] }
+tauri-plugin-dialog = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+enigo = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.58", features = ["Win32_Graphics_Gdi"] }

@@ -1,0 +1,18 @@
+<!doctype html>
+<!--
+  桌面宠物 — 主窗口（宠物窗口）。
+  128×128 无边框透明窗口，由 Tauri 配置为
+  always-on-top + skip-taskbar + undecorated。
+  DOM 结构极简：只包含一个 #pet div，
+  所有视觉效果由 JS/CSS 动态驱动。
+-->
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./pet.less">
+</head>
+<body>
+  <div id="pet" class="pet-idle"></div>
+  <script type="module" src="./pet/main.ts"></script>
+</body>
+</html>
