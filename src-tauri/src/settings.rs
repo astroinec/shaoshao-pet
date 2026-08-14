@@ -285,6 +285,10 @@ pub fn get_preset_sprites(app: &tauri::AppHandle) -> Vec<SpriteInfo> {
     eprintln!("[desktop-pet] preset scan tried: {:?}, using fallback", tried);
     vec![
         SpriteInfo {
+            id: "shaoshao".into(), name: "少少".into(), is_preset: true,
+            w: 1024, h: 1024, url: "/sprites/shaoshao.png".into(),
+        },
+        SpriteInfo {
             id: "blackcat".into(), name: "黑猫".into(), is_preset: true,
             w: 256, h: 256, url: "/sprites/blackcat.png".into(),
         },
